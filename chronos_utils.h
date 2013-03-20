@@ -56,6 +56,8 @@ static inline unsigned long long RDTSC()
 	return EAX_EDX_VAL(val, low, high);
 }
 
+template<typename T> void sum_vec(vector<T> *a1,vector<T> a2);	//sums contents of two vectors, and modified results are stored in the first vector
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -73,7 +75,6 @@ timer_t * make_periodic_threads(timer_t *timer,
 				     pthread_attr_t *tattr);
 
 int delete_periodic_thread(timer_t timer);
-template<typename T> void sum_vec(vector<T> *a1,vector<T> a2);	//sums contents of two vectors, and modified results are stored in the first vector
 
 #ifdef __cplusplus
 }

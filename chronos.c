@@ -170,7 +170,7 @@ long chronos_mutex_init(chronos_mutex_t **m, int *lock_pro) {
 long chronos_mutex_destroy(chronos_mutex_t *m) {
 	return syscall(__NR_do_chronos_mutex, m, CHRONOS_MUTEX_DESTROY);
 }
-/
+*/
 //Modified version of chronos_mutex_destroy
 /********* SH-ST **********/
 long chronos_mutex_destroy(chronos_mutex_t **m) {
