@@ -44,6 +44,22 @@ unsigned long subtract_ts(struct timespec *first, struct timespec *last) {
 	return time;
 }
 
+unsigned long long subtract_ts_mod(struct timespec *first, struct timespec *last) {
+	//This function is includedin "stm_chronos" and named there "subtract_ts_mo". It is included here because "rstm" cannot include "stm_chronos.hpp"
+		signed long nsec;
+		unsigned long long int time;
+
+		nsec = last->tv_nsec - first->tv_nsec;
+		if(nsec < 0) {
+			time = BILLION + nsec;
+			time += ((unsigned long long)(last->tv_sec - first->tv_sec - 1))*BILLION;
+		} else {
+			time = nsec + ((unsigned long long)(last->tv_sec - first->tv_sec))*BILLION;
+		}
+
+		return time;
+}
+
 /* Make a periodic thread */
 timer_t * make_periodic_threads(timer_t *timer,
 				     void (*func)(union sigval),
@@ -79,13 +95,4 @@ timer_t * make_periodic_threads(timer_t *timer,
 
 int delete_periodic_thread(timer_t timer) {
 	return timer_delete(timer);
-}
-
-template<typename T> void sum_vec(vector<T> *a1,vector<T> a2){
-	/*
-	 * sums contents of two vectors, and modified results are stored in the first vector
-	 */
-	for(int i=0;i<a1->size();i++){
-		a1->at(i)+=a2[i];
-	}
 }

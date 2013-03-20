@@ -31,6 +31,8 @@
 #include <unistd.h>
 #include <vector>
 
+using namespace std;
+
 #define BILLION		1000000000
 #define MILLION		1000000
 #define THOUSAND	1000
@@ -56,7 +58,16 @@ static inline unsigned long long RDTSC()
 	return EAX_EDX_VAL(val, low, high);
 }
 
-template<typename T> void sum_vec(vector<T> *a1,vector<T> a2);	//sums contents of two vectors, and modified results are stored in the first vector
+extern unsigned long long subtract_ts_mod(struct timespec *first, struct timespec *last);
+
+template<typename T> void sum_vec(vector<T> *a1,vector<T> a2){
+	/*
+	 * sums contents of two vectors, and modified results are stored in the first vector
+	 */
+	for(int i=0;i<a1->size();i++){
+		a1->at(i)+=a2[i];
+	}
+}
 
 #ifdef __cplusplus
 extern "C" {
