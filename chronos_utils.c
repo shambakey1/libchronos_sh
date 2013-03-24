@@ -44,6 +44,29 @@ unsigned long subtract_ts(struct timespec *first, struct timespec *last) {
 	return time;
 }
 
+void burn_cpu(long long exec_usec, double exec_slope) {
+        long long i;
+        long long j;
+        long long num_loop;
+
+        num_loop = (long long)((double)exec_usec/(exec_slope));
+
+        for(i = 0; i<num_loop; i++)
+                j++;
+}
+
+
+void burn_cpu_abort(long long exec_usec, double exec_slope, char *abort) {
+        long long i;
+
+        for(i = 0; i < exec_usec; i++) {
+                if(*abort)
+                        return;
+                burn_cpu(1, exec_slope);
+        }
+}
+
+
 unsigned long long subtract_ts_mod(struct timespec *first, struct timespec *last) {
 	//This function is includedin "stm_chronos" and named there "subtract_ts_mo". It is included here because "rstm" cannot include "stm_chronos.hpp"
 		signed long nsec;

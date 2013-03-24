@@ -69,6 +69,8 @@ template<typename T> void sum_vec(vector<T> *a1,vector<T> a2){
 	}
 }
 
+void burn_cpu_abort(long long exec_usec, double exec_slope, char *abort);
+
 #ifdef __cplusplus
 extern "C" {
 #endif
