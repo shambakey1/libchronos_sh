@@ -161,7 +161,10 @@ long chronos_mutex_init(chronos_mutex_t *m) {
 long chronos_mutex_init(chronos_mutex_t **m, int *lock_pro) {
 	m[0]->value = 0;
 	m[0]->owner = 0;
-	return syscall(__NR_do_chronos_mutex, m, CHRONOS_MUTEX_INIT, NULL, lock_pro, NULL, NULL);
+	int num_mutex=1;	//dummy variable for sys_call
+	int num_proc=1;		//dummy variable for sys_call
+	int sched_no=1;		//dummy variable for sys_call
+	return syscall(__NR_do_chronos_mutex, m, CHRONOS_MUTEX_INIT, &num_mutex, lock_pro, &num_proc, &sched_no);
 }
 /******** SH-END *********/
 
@@ -174,7 +177,11 @@ long chronos_mutex_destroy(chronos_mutex_t *m) {
 //Modified version of chronos_mutex_destroy
 /********* SH-ST **********/
 long chronos_mutex_destroy(chronos_mutex_t **m) {
-	return syscall(__NR_do_chronos_mutex, m, CHRONOS_MUTEX_DESTROY,NULL,NULL,NULL,NULL);
+	int lock_pro=1;	//dummy variable for sys_call
+	int num_proc=1;	//dummy variable for sys_call
+	int num_mutex=1;	//dummy variable for sys_call
+	int sched_no=1;	//dummy variable for sys_call
+	return syscall(__NR_do_chronos_mutex, m, CHRONOS_MUTEX_DESTROY,&num_mutex,&lock_pro,&num_proc,&sched_no);
 }
 /********* SH-END **********/
 
@@ -200,7 +207,8 @@ long chronos_mutex_unlock(chronos_mutex_t *m) {
 //Modified version of chronos_mutex_unlock
 /********* SH-ST ************/
 long chronos_mutex_unlock(chronos_mutex_t **m, int *num_mutex, int *lock_pro, int *sched_no) {
-	return syscall(__NR_do_chronos_mutex, m, CHRONOS_MUTEX_RELEASE, num_mutex, lock_pro, NULL, sched_no);
+	int num_proc=1;	//dummy variable for sys_call
+	return syscall(__NR_do_chronos_mutex, m, CHRONOS_MUTEX_RELEASE, num_mutex, lock_pro, &num_proc, sched_no);
 }
 /********* SH-END ************/
 
